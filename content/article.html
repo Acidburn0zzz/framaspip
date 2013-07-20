@@ -1,7 +1,7 @@
 <BOUCLE_content(ARTICLES){id_article}>
 <article>
 	<header class="cartouche">
-		[(#LOGO_ARTICLE|image_reduire{200,200})]
+		[(#LOGO_ARTICLE|sinon{#URL_WIKIPEDIA|wikipedia_content{logo}|balise_img{'','spip_logos'}}|image_reduire{200,200})]
 		[<p class="#EDIT{surtitre} surtitre">(#SURTITRE)</p>]
 		<h1><span class="#EDIT{titre}">#TITRE</span>[
 			<small class="#EDIT{soustitre} soustitre">(#SOUSTITRE)</small>
@@ -68,7 +68,7 @@
 
 		[(#REM) Forum de l'article
 		NB : pour desactiver les forums de l'article, supprimez simplement la ligne ci-dessous ]
-		<INCLURE{fond=inclure/forum,id_article,repondre_url=(#PARAMETRES_FORUM|url_reponse_forum),repondre_titre=<:repondre_article:>} />
+		<INCLURE{fond=inclure/forum,id_article,repondre_url=(#PARAMETRES_FORUM|url_reponse_forum),repondre_titre=<:comments:comments_h:>} />
 	</aside>
 
 </article>

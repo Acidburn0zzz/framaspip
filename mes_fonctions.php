@@ -64,6 +64,30 @@ function wikipedia_content($url, $what="html"){
 		$html = (string)$xml->parse->text;
 		$html = liens_absolus($html,$url);
 
+		// mise en forme tableaux
+		$tables = extraire_balises($html,"table");
+		foreach($tables as $table){
+			$t = inserer_attribut($table,"class","spip");
+			$html = str_replace($table,$t,$html);
+		}
+		// supprimer les <tr><td><hr>
+		$html = preg_replace(",<tr[^>]*>\s*<td[^>]*>\s*<hr[^>]*>\s*</td>\s*</tr>,Uims","",$html);
+
+		// extraire le logo
+		$logo = "";
+		$infobox = explode("<table",$html);
+		array_shift($infobox);
+		$infobox = "<table" . implode("<table",$infobox);
+		if ($images = extraire_balises($infobox,"img")){
+			$logo = extraire_attribut(reset($images),"src");
+			if (strncmp($logo,"//",2)==0)
+				$logo = "http:".$logo;
+			if (strpos($logo,"commons/thumb/")!==false){
+				$logo = str_replace("commons/thumb/","commons/",$logo);
+				$logo = preg_replace(",/[^/]*$,Uims","",$logo);
+			}
+		}
+
 		$content[$url] = array(
 			// type (required)
 	    // The resource type. Valid values, along with value-specific parameters, are described below.
@@ -80,6 +104,8 @@ function wikipedia_content($url, $what="html"){
 			// html (required)
 	    // The HTML required to display the resource. The HTML should have no padding or margins. Consumers may wish to load the HTML in an off-domain iframe to avoid XSS vulnerabilities. The markup should be valid XHTML 1.0 Basic.
 			'html' => $html,
+
+			'logo' => $logo,
 
 			// author_name (optional)
 	    // The name of the author/owner of the resource.
