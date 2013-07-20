@@ -1,0 +1,65 @@
+/* corrections spécifiques pour le site framasoft.net */
+
+/* Bootstrap déinissait un lie-height de 140%, bien trop grand */
+h1, h2, h3 {
+    line-height: 100% !important;
+}
+
+
+.framanav_container {
+    width: 1141px !important;
+}
+
+
+/* on descend le corps de page afin qu'il ne soit pas masqué par la nav */
+body {
+    margin-top: 40px !important;
+}
+
+.navbar .nav .dropdown-toggle .caret {
+    margin-top: 5px !important;
+}
+
+#framanav dd, #framanav li {
+    line-height: 15px !important;
+}
+
+/* le bouton "OK" du champs de recherche */
+.g_button {
+    width: auto !important;
+    margin-top: -8px;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+/* les textes des menus doivent etre alignés à gauche */
+#framanav .dropdown-menu li > a {
+    text-align: left !important;
+}
+
+#framanav .nous_suivre a {
+    margin-top: 0px !important;
+}
+
+#framanav .nous_soutenir a {
+    margin-top: 4px !important;
+}
+
+.navbar-fixed-top {
+    z-index: 96 !important;
+}
+
+#framanav a.dropdown-toggle {
+    margin-top: 4px;
+}
+
+#framanav {
+    font-size: 12px !important;
+}
+
+@media (max-width: 979px) {
+    body {
+        margin-top: 0px !important;
+	padding-top: 0px !important;
+    }
+}
