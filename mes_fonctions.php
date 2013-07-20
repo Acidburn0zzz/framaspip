@@ -82,6 +82,10 @@ function wikipedia_content($url, $what="html"){
 			$logo = extraire_attribut(reset($images),"src");
 			if (strncmp($logo,"//",2)==0)
 				$logo = "http:".$logo;
+			if (strpos($logo,"commons/thumb/")!==false){
+				$logo = str_replace("commons/thumb/","commons/",$logo);
+				$logo = preg_replace(",/[^/]*$,Uims","",$logo);
+			}
 		}
 
 		$content[$url] = array(
