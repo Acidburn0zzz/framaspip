@@ -3,7 +3,7 @@
 	[<input type='hidden' name='logo' value='(#ENV**{logo,''})' />]
 	[<input type='hidden' name='format_logo' value='(#ENV**{format_logo,''})' />]
 	[<!-- Le logo auto-detecte -->
-	<div class='previsu_logo_fiche'>(#ENV**{logo}|image_reduire{80,80})</div>]
+	<div class='previsu_logo_fiche'>(#ENV**{logo}|image_reduire{200,80})</div>]
   <fieldset>
 	  <ul>
 		  <li class="editer editer_url_auto pleine_largeur[ (#ENV**{erreurs}|table_valeur{url_auto}|oui)erreur]">

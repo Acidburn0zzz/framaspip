@@ -90,8 +90,12 @@ function frama_wikipedia_content($url){
 					if (strpos($src,"thumb/")!==false){
 						$srcfull = str_replace("thumb/","",$src);
 						$srcfull = preg_replace(",/[^/]*$,Uims","",$srcfull);
-						if (count($srcs) OR preg_match(",[.](png|gif|jpe?g)$,",$srcfull))
+						if (count($srcs) OR preg_match(",[.](png|gif|jpe?g)$,",$srcfull)){
 							$src = $srcfull;
+						}
+						else {
+							$src = preg_replace(",/\d+px(-[^/]*)$,Uims","/400px\\1",$src);
+						}
 					}
 					$srcs[] = $src;
 				}
