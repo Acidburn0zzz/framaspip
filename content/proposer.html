@@ -1,0 +1,16 @@
+<section>
+	<header class="cartouche">
+		<h1><:frama:proposer_titre:></h1>
+	</header>
+
+	<div class="main">
+		[(#SESSION{id_auteur}|non)
+		<p class="explication"><:frama:proposer_message_login:></p>
+		#FORMULAIRE_LOGIN
+		]
+		[(#SESSION{id_auteur}|oui)
+		<div class="ajax">
+			#FORMULAIRE_PROPOSER_ARTICLE{new,#CONFIG{frama/rubrique_proposer,481}}
+		</div>]
+	</div>
+</section>
