@@ -1,0 +1,23 @@
+<li class="editer editer_referencement_automatise fieldset">
+	[<p class="notice">(#ENV*{erreurs}|table_valeur{verif_url_auto})</p>]
+	[<input type='hidden' name='logo' value='(#ENV**{logo,''})' />]
+	[<input type='hidden' name='format_logo' value='(#ENV**{format_logo,''})' />]
+	[<!-- Le logo auto-detecte -->
+	<div class='previsu_logo_fiche'>(#ENV**{logo}|image_reduire{150,150})</div>]
+  <fieldset>
+	  <ul>
+		  <li class="editer editer_url_auto pleine_largeur[ (#ENV**{erreurs}|table_valeur{url_auto}|oui)erreur]">
+				[<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{url_auto})</span>]
+				<p class="explication"><:frama:texte_referencement_automatique:></p>
+				<input type="text" name="url_auto" id="url_auto" class='text' size='40' value="[(#ENV{url_auto}|sinon{http://})]" />
+		  </li>
+	  </ul>
+	  <p class="boutons"><input type='submit' class='submit' name='ajoute_url_auto' value='<:bouton_ajouter:>' /></p>
+		<p class="explication"><:frama:texte_non_fonction_referencement:></p>
+	</fieldset>
+</li>
+<style type="text/css">
+.formulaire_spip .editer_referencement_automatise fieldset,
+.formulaire_spip .editer_referencement_automatise .boutons{background-color:#E9E9E9;border:0;}
+.previsu_logo_fiche {float: right;position: absolute;top:-100px;right:0;}
+</style>
