@@ -1,7 +1,7 @@
 <BOUCLE_content(ARTICLES){id_article}>
 <article>
 	<header class="cartouche">
-		[(#LOGO_ARTICLE|sinon{#URL_WIKIPEDIA|wikipedia_content{logo}|balise_img{'','spip_logos'}}|image_reduire{200,200})]
+		[(#LOGO_ARTICLE|image_reduire{200,200})]
 		[<p class="#EDIT{surtitre} surtitre">(#SURTITRE)</p>]
 		<h1><span class="#EDIT{titre}">#TITRE</span>[
 			<small class="#EDIT{soustitre} soustitre">(#SOUSTITRE)</small>
@@ -43,13 +43,8 @@
 		[<div class="#EDIT{chapo} chapo surlignable">(#CHAPO|image_reduire{500,0})</div>]
 		[<div class="#EDIT{texte} texte surlignable">(#TEXTE|image_reduire{500,0})</div>]
 
-		[<h3><a href="#URL_WIKIPEDIA">Sur wikipedia</a></h3>
-		<blockquote class="wikipedia">
-		(#URL_WIKIPEDIA|wikipedia_content)
-		</blockquote>
-		]
-
 		[<p class="#EDIT{hyperlien} hyperlien"><:voir_en_ligne:> : <a href="(#URL_SITE)" class="spip_out">[(#NOM_SITE|sinon{[(#URL_SITE|couper{80})]})]</a></p>]
+		[<p class="#EDIT{hyperlien} hyperlien">Voir sur Wikipedia : <a href="(#URL_WIKIPEDIA)" class="spip_out">#URL_WIKIPEDIA</a></p>]
 	</div>
 
 	<footer>

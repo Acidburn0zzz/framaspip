@@ -73,7 +73,11 @@ function frama_formulaire_traiter($flux){
 	){
 		// recuperer le logo si dispo
 		if ($logo = _request('logo') AND $format_logo = _request('format_logo')){
-
+			include_spip('action/iconifier');
+			include_spip('action/distant');
+			$local = _DIR_RACINE . copie_locale($logo);
+			$ajouter_image = charger_fonction('spip_image_ajouter','action');
+			$ajouter_image("arton".$id_article," ",array('tmp_name'=>$local));
 		}
 	}
 
@@ -107,15 +111,19 @@ function frama_analyser_wikipedia($url){
 	$texte = str_replace("\r","\n",$texte);
 	$texte = explode("\n\n",$texte);
 
+	// supprimer les premiers paragraphes non significatifs
+	while (strlen(trim(reset($texte)))<15)
+		array_shift($texte);
+
 	$auto['descriptif'] = array_shift($texte);
 	$auto['texte'] = trim(implode("\n\n",$texte));
-	$auto['url_wikipedia'] = $url;
+	$auto['url_wikipedia'] = $content['url'];
 
-	if ($content['logo']
-	  AND $image = recuperer_infos_distantes($content['logo'])) {
+	if ($content['thumbnail_url']
+	  AND $image = recuperer_infos_distantes($content['thumbnail_url'])) {
 		if (in_array($image['extension'], array('gif', 'jpg', 'png'))) {
 			$auto['format_logo'] = $image['extension'];
-			$auto['logo'] = $content['logo'];
+			$auto['logo'] = $content['thumbnail_url'];
 		}
 		else if ($image['fichier']) {
 			spip_unlink($image['fichier']);

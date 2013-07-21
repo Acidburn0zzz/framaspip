@@ -70,26 +70,15 @@ function frama_wikipedia_content($url){
 		$html = (string)$xml->parse->text;
 		$html = liens_absolus($html,$url);
 
-		// mise en forme tableaux
-		$tables = extraire_balises($html,"table");
-		foreach($tables as $table){
-			$t = inserer_attribut($table,"class","spip");
-			$html = str_replace($table,$t,$html);
-		}
-		// supprimer les <tr><td><hr>
-		$html = preg_replace(",<tr[^>]*>\s*<td[^>]*>\s*<hr[^>]*>\s*</td>\s*</tr>,Uims","",$html);
-
-		// extraire le cartouche
-		$cartouche = "";
-		if (preg_match(",<table[^>]*>.*</table>,Uims",$html,$m)){
-			$cartouche = $m[0];
-			$p = strpos($html,$cartouche);
-			$html = substr($html,$p+strlen($cartouche));
+		if (preg_match(",REDIRECTION\s*<a\b.*</a>,Uims",$html,$m)){
+			$link = extraire_balise($html,"a");
+			$link = extraire_attribut($link,"href");
+			return frama_wikipedia_content($link);
 		}
 
-		// extraire le logo et documents
+		// extraire le logo et documents (images de plus de 50px)
 		$logo = "";
-		if ($images = extraire_balises($cartouche,"img")){
+		if ($images = extraire_balises($html,"img")){
 			$srcs = array();
 			foreach($images as $i){
 				$t = taille_image($i);
@@ -99,8 +88,10 @@ function frama_wikipedia_content($url){
 					if (strncmp($src,"//",2)==0)
 						$src = "http:".$src;
 					if (strpos($src,"thumb/")!==false){
-						$src = str_replace("thumb/","",$src);
-						$src = preg_replace(",/[^/]*$,Uims","",$src);
+						$srcfull = str_replace("thumb/","",$src);
+						$srcfull = preg_replace(",/[^/]*$,Uims","",$srcfull);
+						if (count($srcs) OR preg_match(",[.](png|gif|jpe?g)$,",$srcfull))
+							$src = $srcfull;
 					}
 					$srcs[] = $src;
 				}
@@ -108,6 +99,19 @@ function frama_wikipedia_content($url){
 			if (count($srcs))
 				$logo = array_shift($srcs);
 		}
+
+		// mise en forme tableaux et extraction cartouche
+		$tables = extraire_balises($html,"table");
+		$cartouche = "";
+		foreach($tables as $table){
+			$p = strpos($html,$table);
+			$html = substr($html,$p+strlen($table));
+			$t = inserer_attribut($table,"class","spip");
+			$cartouche .= $t;
+		}
+		// supprimer les <tr><td><hr>
+		$cartouche = preg_replace(",<tr[^>]*>\s*<td[^>]*>\s*<hr[^>]*>\s*</td>\s*</tr>,Uims","",$cartouche);
+
 
 		$content[$url] = array(
 			// type (required)
@@ -128,8 +132,6 @@ function frama_wikipedia_content($url){
 
 			'infobox' => $cartouche,
 
-			'logo' => $logo,
-
 			'images' => $srcs,
 
 			// author_name (optional)
@@ -146,7 +148,7 @@ function frama_wikipedia_content($url){
 			// thumbnail_url (optional)
 	    // A URL to a thumbnail image representing the resource. The thumbnail must respect any maxwidth and maxheight parameters. If this paramater is present, thumbnail_width and thumbnail_height must also be present.
 			// NIY
-			// 'thumbnail_url' => '',
+			'thumbnail_url' => $logo,
 
 			// thumbnail_width (optional)
 	    // The width of the optional thumbnail. If this paramater is present, thumbnail_url and thumbnail_height must also be present.
@@ -157,6 +159,8 @@ function frama_wikipedia_content($url){
 	    // The height of the optional thumbnail. If this paramater is present, thumbnail_url and thumbnail_width must also be present.
 			// NIY
 			// 'thumbnail_height' => '',
+
+			'url' => $url,
 
 		);
 	}
