@@ -1,0 +1,18 @@
+<plugin>
+	<nom>FramaSPIP</nom>
+	<auteur>cerdic, b_b, kent1</auteur>
+	<version>0.1.0</version>
+	<licence><a href='http://www.opensource.org/licenses/gpl-license.php' rel='licence'>Licensed under GPL</a></licence>
+	<description>
+		<multi>
+			[fr]Th&#232;me SPIPr pour Framasoft
+			[en]SPIPr Theme for Framasoft
+		</multi>
+	</description>
+	<icon>framaspip.png</icon>
+  	<etat>stable</etat>
+  	<prefix>theme_framaspip</prefix>
+	<utilise id="spipr" version="[0.1.0-dev;]" />
+	<utilise id="mediaspip_core" version="[0.6.0;]" />
+	<categorie>theme</categorie>
+</plugin>
