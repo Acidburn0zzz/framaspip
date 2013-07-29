@@ -1,0 +1,63 @@
+@import "css/variables.less";
+@import "css/spip.list.less";
+
+.liste_vignettes .liste-items{
+  border:none;
+}
+
+.liste-items .item.thumbnail{
+  clear:none;
+  padding:.5em;
+  -moz-box-sizing:padding-box;
+  -webkit-box-sizing:padding-box;
+  box-sizing:padding-box;
+  width:31%;
+  margin:1%;
+}
+
+.medias ul.liste-items .vignette:nth-of-type(3n-2) {
+    clear: both;
+}
+
+.menu,.media_infos{
+  .clearfix
+}
+
+.media_infos .spip_logos{
+  margin:0 .5em 1.5em 0;
+}
+
+.media_infos p{
+  margin:0 0 .5em 0;
+}
+strong#logo_site_spip{h1}
+
+.footer{ border-top: 2px solid;
+    margin: 4em 0 0 0;
+    padding: 2em 0;
+    position: relative;
+    text-align: left;
+}
+
+.footer .menu-liste li{display: inline;border-right:2px solid @grayLight;padding:0 5px;}
+.footer .menu-liste li:last-child{border-right:none;}
+.footer .nav > li > a{display:inline;}
+
+.menu-liste{.liste-items}
+
+.menu-liste .menu-entree{.liste-items .item}
+
+#formulaire_recherche label{
+  display:none;
+}
+
+#liste_medias_publication form textarea,
+#liste_medias_publication form input.text,
+#liste_medias_publication form select,
+#liste_medias_publication .markItUp .markItUpContainer .markItUpHeader{
+  width:100%;
+}
+
+.extra1 .formulaire_login form input.text, .extra1 .formulaire_login form input.password{
+  width:80%;
+}
